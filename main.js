@@ -1,4 +1,7 @@
 const contentWrapper = document.querySelector("#content-wrapper");
+
+const shiftTite = document.querySelector("h1");
+
 const daysInfo = [
     {
         "name": "Monday",
@@ -131,6 +134,15 @@ const classTimes = [
     Time(18, 30, 19, 15),
     Time(19, 20, 20, 5),
 ]
+
+const weekDays = [
+    "Ponedeljak",
+    "Utorak",
+    "Sreda",
+    "Cetvrtak",
+    "Petak",
+]
+
 console.log(classTimes);
 
 function Time(startHour, startMinute, endHour, endMinute) {
@@ -148,7 +160,19 @@ GenerateTable();
 
 async function GenerateTable(isMorningSelected = true) {
     contentWrapper.innerHTML = "";
+
+    shiftTite.innerText = isMorningSelected ? "Prepodne" : "Poslepodne";
+
     const table = document.createElement('table');
+    const dayRow = document.createElement("tr");
+    dayRow.appendChild(document.createElement("td"));
+    dayRow.appendChild(document.createElement("td"));
+    weekDays.forEach((day, i) =>{
+        const dayCell = document.createElement("td");
+        dayCell.innerText = weekDays[i]
+        dayRow.appendChild(dayCell);
+    });
+    table.appendChild(dayRow);
 
     const rows = [];
     for (var i = 0; i < 14; i++) {
@@ -179,14 +203,7 @@ async function GenerateTable(isMorningSelected = true) {
 
             if (classId != 15) {
                 isRowEmpty = false;
-
                 newCell.innerText = ClassNames[classId - 1];
-                // fetch(`https://localhost:7116/api/${classId}`, {
-                //     method: 'GET'
-                // })
-                //     .then(className => className.json())
-                //     .then(className => newCell.innerText = className.value)
-                //     .catch(err => console.error(err));
             }
 
             rows[rowId].appendChild(newCell);
