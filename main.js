@@ -4,7 +4,7 @@ const shiftTite = document.querySelector("h1");
 
 const daysInfo = [
     {
-        "name": "Monday",
+        "name": "Ponedeljak",
         "classIds": [
             15,
             6,
@@ -23,7 +23,7 @@ const daysInfo = [
         ]
     },
     {
-        "name": "Tuesday",
+        "name": "Utorak",
         "classIds": [
             15,
             9,
@@ -42,7 +42,7 @@ const daysInfo = [
         ]
     },
     {
-        "name": "Wednesday",
+        "name": "Sreda",
         "classIds": [
             15,
             1,
@@ -61,7 +61,7 @@ const daysInfo = [
         ]
     },
     {
-        "name": "Thursday",
+        "name": "Cetvrtak",
         "classIds": [
             3,
             12,
@@ -80,7 +80,7 @@ const daysInfo = [
         ]
     },
     {
-        "name": "Friday",
+        "name": "Petak",
         "classIds": [
             15,
             8,
@@ -119,7 +119,7 @@ const ClassNames = [
 ]
 
 const classTimes = [
-    Time(7, 45, 8, 30),
+    Time(-7, 45, 8, 30),
     Time(8, 35, 9, 20),
     Time(9, 40, 10, 25),
     Time(10, 30, 11, 15),
@@ -135,14 +135,6 @@ const classTimes = [
     Time(19, 20, 20, 5),
 ]
 
-const weekDays = [
-    "Ponedeljak",
-    "Utorak",
-    "Sreda",
-    "Cetvrtak",
-    "Petak",
-]
-
 console.log(classTimes);
 
 function Time(startHour, startMinute, endHour, endMinute) {
@@ -154,8 +146,16 @@ function Time(startHour, startMinute, endHour, endMinute) {
     }
 }
 
-let PrefixNumber = (number) => number < 10 && number > -10 ? `0${number}` : `${number}`;
+let PrefixNumber = (number) => {
+    return (number >= 0 && number < 10) ? `0${number}` :
+           (number > -10 && number < 0) ? `-0${Math.abs(number)}` :
+           `${number}`;
+};
 
+// Call the GenerateTable function with the default parameter (isMorningSelected = true)
+// This function generates a table representing a weekly schedule
+// If isMorningSelected is true, the table represents a morning schedule
+// If isMorningSelected is false, the table represents an afternoon schedule
 GenerateTable();
 
 async function GenerateTable(isMorningSelected = true) {
@@ -167,9 +167,9 @@ async function GenerateTable(isMorningSelected = true) {
     const dayRow = document.createElement("tr");
     dayRow.appendChild(document.createElement("td"));
     dayRow.appendChild(document.createElement("td"));
-    weekDays.forEach((day, i) =>{
+    daysInfo.forEach((dayInfo, i) =>{
         const dayCell = document.createElement("td");
-        dayCell.innerText = weekDays[i]
+        dayCell.innerText = dayInfo.name
         dayRow.appendChild(dayCell);
     });
     table.appendChild(dayRow);
