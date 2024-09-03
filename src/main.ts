@@ -264,8 +264,15 @@ const timeTable = [
 ];
 
 let shift: Shift = "morning";
-document.querySelector("#shift-toggle")?.addEventListener("click", () => {
+document.querySelector("#shift-toggle")?.addEventListener("click", (e) => {
   shift = shift === "morning" ? "afternoon" : "morning";
+  const target = e.target as HTMLElement;
+
+  if (target.classList.contains("toggle-wrapper"))
+    target.dataset.state = shift === "morning" ? "morning" : "afternoon";
+  else
+    target.parentElement!.dataset.state =
+      shift === "morning" ? "morning" : "afternoon";
   generateTable();
 });
 
@@ -281,8 +288,6 @@ document.querySelectorAll(".radio-button").forEach((btn) => {
     generateTable();
   });
 });
-
-console.log(timeTable);
 
 let PrefixNumber = (number: number) => {
   return number >= 0 && number < 10
@@ -353,5 +358,4 @@ async function generateTable() {
   }
 
   contentWrapper.appendChild(table);
-  console.log(schedules);
 }
