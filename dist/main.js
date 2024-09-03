@@ -34,7 +34,108 @@ class Time {
 const contentWrapper = document.querySelector("#content-wrapper");
 const shiftTite = document.querySelector("h1");
 let currentSchedule = 0;
-const schedules = [];
+const schedules = [
+    {
+        afternoon: [
+            {
+                name: "Ponedeljak",
+                classes: [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Fizicko",
+                    "Racunarske mreze i sistemi",
+                    "Racunarske mreze i sistemi",
+                    "PIT",
+                    "PIT",
+                    "Elektronsko poslovanje",
+                    "Elektronsko poslovanje",
+                ],
+            },
+            {
+                name: "Utorak",
+                classes: [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Matematika",
+                    "Matematika",
+                    "Srpski",
+                    "Veb programiranje",
+                    "Veb programiranje",
+                    "Zastita informacionih sistema",
+                    "Zastita informacionih sistema",
+                ],
+            },
+            {
+                name: "Sreda",
+                classes: [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Programiranje",
+                    "Programiranje",
+                    "Programiranje",
+                    "Programiranje",
+                    "Preduzetnistvo",
+                    "Preduzetnistvo",
+                    "",
+                    "",
+                ],
+            },
+            {
+                name: "Cetvrtak",
+                classes: [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Veronauka",
+                    "COS",
+                    "Racunarske mreze i sistemi",
+                    "Engleski",
+                    "PIT",
+                    "PIT",
+                    "PIT",
+                    "PIT",
+                ],
+            },
+            {
+                name: "Petak",
+                classes: [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Srpski",
+                    "Srpski",
+                    "Matematika",
+                    "Engleski",
+                    "Fizicko",
+                    "Veb programiranje",
+                    "Veb programiranje",
+                ],
+            },
+        ],
+        morning: [],
+    },
+];
 const timeTable = [
     new Time(7, 45, 8, 30),
     new Time(8, 35, 9, 20),
@@ -84,7 +185,7 @@ async function generateTable() {
     const dayRow = document.createElement("tr");
     dayRow.appendChild(document.createElement("td"));
     dayRow.appendChild(document.createElement("td"));
-    schedules[currentSchedule].days.forEach((dayInfo) => {
+    schedules[currentSchedule][shift].forEach((dayInfo) => {
         // Use currentSchedule to select the schedule
         const dayCell = document.createElement("td");
         dayCell.innerText = dayInfo.name;
@@ -104,11 +205,9 @@ async function generateTable() {
         newRow.appendChild(rowNumber);
         rows.push(newRow);
     }
-    if (!isMorningSelected)
-        rows.reverse();
     for (var rowId = 0; rowId < rows.length; rowId++) {
         let isRowEmpty = true;
-        schedules[currentSchedule].days.forEach((dayInfo) => {
+        schedules[currentSchedule][shift].forEach((dayInfo) => {
             // Use currentSchedule to select the schedule
             const newCell = document.createElement("td");
             const className = dayInfo.classes[rowId];

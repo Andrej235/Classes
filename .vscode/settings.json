@@ -3,6 +3,7 @@
     "cSpell.enableFiletypes": [
         "!javascript",
         "!json",
+        "!jsonc",
         "!typescript"
     ]
 }

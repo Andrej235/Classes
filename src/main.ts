@@ -33,21 +33,122 @@ type ClassName =
   | "Srpski"
   | "Fizicko"
   | "";
+type Shift = "morning" | "afternoon";
 
 type Day = {
   name: DayName;
   classes: ClassName[];
 };
 type Schedule = {
-  days: Day[];
-  shift: "morning" | "afternoon";
+  [shift in Shift]: Day[];
 };
 
 const contentWrapper = document.querySelector("#content-wrapper")!;
 const shiftTite = document.querySelector("h1")!;
 let currentSchedule = 0;
 
-const schedules: Schedule[] = [];
+const schedules: Schedule[] = [
+  {
+    afternoon: [
+      {
+        name: "Ponedeljak",
+        classes: [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Fizicko",
+          "Racunarske mreze i sistemi",
+          "Racunarske mreze i sistemi",
+          "PIT",
+          "PIT",
+          "Elektronsko poslovanje",
+          "Elektronsko poslovanje",
+        ],
+      },
+      {
+        name: "Utorak",
+        classes: [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Matematika",
+          "Matematika",
+          "Srpski",
+          "Veb programiranje",
+          "Veb programiranje",
+          "Zastita informacionih sistema",
+          "Zastita informacionih sistema",
+        ],
+      },
+      {
+        name: "Sreda",
+        classes: [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Programiranje",
+          "Programiranje",
+          "Programiranje",
+          "Programiranje",
+          "Preduzetnistvo",
+          "Preduzetnistvo",
+          "",
+          "",
+        ],
+      },
+      {
+        name: "Cetvrtak",
+        classes: [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Veronauka",
+          "COS",
+          "Racunarske mreze i sistemi",
+          "Engleski",
+          "PIT",
+          "PIT",
+          "PIT",
+          "PIT",
+        ],
+      },
+      {
+        name: "Petak",
+        classes: [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Srpski",
+          "Srpski",
+          "Matematika",
+          "Engleski",
+          "Fizicko",
+          "Veb programiranje",
+          "Veb programiranje",
+        ],
+      },
+    ],
+    morning: [],
+  },
+];
 
 const timeTable = [
   new Time(7, 45, 8, 30),
@@ -66,7 +167,7 @@ const timeTable = [
   new Time(19, 20, 20, 5),
 ];
 
-let shift: "morning" | "afternoon" = "morning";
+let shift: Shift = "morning";
 document.querySelector("#shift-toggle")?.addEventListener("click", () => {
   shift = shift === "morning" ? "afternoon" : "morning";
   generateTable();
@@ -109,7 +210,7 @@ async function generateTable() {
   dayRow.appendChild(document.createElement("td"));
   dayRow.appendChild(document.createElement("td"));
 
-  schedules[currentSchedule].days.forEach((dayInfo) => {
+  schedules[currentSchedule][shift].forEach((dayInfo) => {
     // Use currentSchedule to select the schedule
     const dayCell = document.createElement("td");
     dayCell.innerText = dayInfo.name;
@@ -136,12 +237,10 @@ async function generateTable() {
     rows.push(newRow);
   }
 
-  if (!isMorningSelected) rows.reverse();
-
   for (var rowId = 0; rowId < rows.length; rowId++) {
     let isRowEmpty = true;
 
-    schedules[currentSchedule].days.forEach((dayInfo) => {
+    schedules[currentSchedule][shift].forEach((dayInfo) => {
       // Use currentSchedule to select the schedule
       const newCell = document.createElement("td");
       const className = dayInfo.classes[rowId];
